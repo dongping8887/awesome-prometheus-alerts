@@ -14,7 +14,7 @@ groups:
         description: "Redis instance is down\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 
     - alert: RedisMissingMaster
-      expr: '(count(redis_instance_info{role="master"}) or vector(0)) < 1'
+      expr: '(count by (job) (redis_instance_info{role="master"})) < 1'
       for: 0m
       labels:
         severity: critical
@@ -23,7 +23,7 @@ groups:
         description: "Redis cluster has no node marked as master.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 
     - alert: RedisTooManyMasters
-      expr: 'count(redis_instance_info{role="master"}) > 1'
+      expr: 'count by (job) (redis_instance_info{role="master"}) > 1'
       for: 0m
       labels:
         severity: critical
@@ -86,7 +86,7 @@ groups:
         description: "Redis is running out of configured maxmemory (> 90%)\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 
     - alert: RedisTooManyConnections
-      expr: 'redis_connected_clients > 100'
+      expr: 'redis_connected_clients > 500'
       for: 2m
       labels:
         severity: warning

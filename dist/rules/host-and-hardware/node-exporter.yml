@@ -140,7 +140,7 @@ groups:
         description: "CPU iowait > 5%. A high iowait means that you are disk or network bound.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 
     - alert: HostContextSwitching
-      expr: '(rate(node_context_switches_total[5m])) / (count without(cpu, mode) (node_cpu_seconds_total{mode="idle"})) > 1000'
+      expr: '(rate(node_context_switches_total[5m])) / (count without(cpu, mode) (node_cpu_seconds_total{mode="idle"})) > 2000'
       for: 0m
       labels:
         severity: warning
@@ -166,14 +166,14 @@ groups:
         summary: Host systemd service crashed (instance {{ $labels.instance }})
         description: "systemd service crashed\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 
-    - alert: HostPhysicalComponentTooHot
-      expr: 'node_hwmon_temp_celsius > 75'
-      for: 5m
-      labels:
-        severity: warning
-      annotations:
-        summary: Host physical component too hot (instance {{ $labels.instance }})
-        description: "Physical hardware component too hot\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+#    - alert: HostPhysicalComponentTooHot
+#      expr: 'node_hwmon_temp_celsius > 75'
+#      for: 5m
+#      labels:
+#        severity: warning
+#      annotations:
+#        summary: Host physical component too hot (instance {{ $labels.instance }})
+#        description: "Physical hardware component too hot\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 
     - alert: HostNodeOvertemperatureAlarm
       expr: 'node_hwmon_temp_crit_alarm_celsius == 1'
@@ -292,14 +292,14 @@ groups:
         summary: Host clock skew (instance {{ $labels.instance }})
         description: "Clock skew detected. Clock is out of sync. Ensure NTP is configured correctly on this host.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 
-    - alert: HostClockNotSynchronising
-      expr: 'min_over_time(node_timex_sync_status[1m]) == 0 and node_timex_maxerror_seconds >= 16'
-      for: 2m
-      labels:
-        severity: warning
-      annotations:
-        summary: Host clock not synchronising (instance {{ $labels.instance }})
-        description: "Clock not synchronising. Ensure NTP is configured on this host.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+#    - alert: HostClockNotSynchronising
+#      expr: 'min_over_time(node_timex_sync_status[1m]) == 0 and node_timex_maxerror_seconds >= 16'
+#      for: 2m
+#      labels:
+#        severity: warning
+#      annotations:
+#        summary: Host clock not synchronising (instance {{ $labels.instance }})
+#        description: "Clock not synchronising. Ensure NTP is configured on this host.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 
     - alert: HostRequiresReboot
       expr: 'node_reboot_required > 0'

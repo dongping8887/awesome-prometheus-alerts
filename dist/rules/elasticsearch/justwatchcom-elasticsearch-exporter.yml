@@ -49,32 +49,32 @@ groups:
         summary: Elasticsearch Cluster Red (instance {{ $labels.instance }})
         description: "Elastic Cluster Red status\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 
-    - alert: ElasticsearchClusterYellow
-      expr: 'elasticsearch_cluster_health_status{color="yellow"} == 1'
-      for: 0m
-      labels:
-        severity: warning
-      annotations:
-        summary: Elasticsearch Cluster Yellow (instance {{ $labels.instance }})
-        description: "Elastic Cluster Yellow status\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+#    - alert: ElasticsearchClusterYellow
+#      expr: 'elasticsearch_cluster_health_status{color="yellow"} == 1'
+#      for: 0m
+#      labels:
+#        severity: warning
+#      annotations:
+#        summary: Elasticsearch Cluster Yellow (instance {{ $labels.instance }})
+#        description: "Elastic Cluster Yellow status\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 
-    - alert: ElasticsearchHealthyNodes
-      expr: 'elasticsearch_cluster_health_number_of_nodes < 3'
-      for: 0m
-      labels:
-        severity: critical
-      annotations:
-        summary: Elasticsearch Healthy Nodes (instance {{ $labels.instance }})
-        description: "Missing node in Elasticsearch cluster\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+#    - alert: ElasticsearchHealthyNodes
+#      expr: 'elasticsearch_cluster_health_number_of_nodes < 3'
+#      for: 0m
+#      labels:
+#        severity: critical
+#      annotations:
+#        summary: Elasticsearch Healthy Nodes (instance {{ $labels.instance }})
+#        description: "Missing node in Elasticsearch cluster\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 
-    - alert: ElasticsearchHealthyDataNodes
-      expr: 'elasticsearch_cluster_health_number_of_data_nodes < 3'
-      for: 0m
-      labels:
-        severity: critical
-      annotations:
-        summary: Elasticsearch Healthy Data Nodes (instance {{ $labels.instance }})
-        description: "Missing data node in Elasticsearch cluster\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+#    - alert: ElasticsearchHealthyDataNodes
+#      expr: 'elasticsearch_cluster_health_number_of_data_nodes < 3'
+#      for: 0m
+#      labels:
+#        severity: critical
+#      annotations:
+#        summary: Elasticsearch Healthy Data Nodes (instance {{ $labels.instance }})
+#        description: "Missing data node in Elasticsearch cluster\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 
     - alert: ElasticsearchRelocatingShards
       expr: 'elasticsearch_cluster_health_relocating_shards > 0'
@@ -112,14 +112,14 @@ groups:
         summary: Elasticsearch initializing shards too long (instance {{ $labels.instance }})
         description: "Elasticsearch has been initializing shards for 15 min\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 
-    - alert: ElasticsearchUnassignedShards
-      expr: 'elasticsearch_cluster_health_unassigned_shards > 0'
-      for: 0m
-      labels:
-        severity: critical
-      annotations:
-        summary: Elasticsearch unassigned shards (instance {{ $labels.instance }})
-        description: "Elasticsearch has unassigned shards\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+#    - alert: ElasticsearchUnassignedShards
+#      expr: 'elasticsearch_cluster_health_unassigned_shards > 0'
+#      for: 0m
+#      labels:
+#        severity: critical
+#      annotations:
+#        summary: Elasticsearch unassigned shards (instance {{ $labels.instance }})
+#        description: "Elasticsearch has unassigned shards\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 
     - alert: ElasticsearchPendingTasks
       expr: 'elasticsearch_cluster_health_number_of_pending_tasks > 0'
@@ -130,11 +130,11 @@ groups:
         summary: Elasticsearch pending tasks (instance {{ $labels.instance }})
         description: "Elasticsearch has pending tasks. Cluster works slowly.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 
-    - alert: ElasticsearchNoNewDocuments
-      expr: 'increase(elasticsearch_indices_docs{es_data_node="true"}[10m]) < 1'
-      for: 0m
-      labels:
-        severity: warning
-      annotations:
-        summary: Elasticsearch no new documents (instance {{ $labels.instance }})
-        description: "No new documents for 10 min!\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+#    - alert: ElasticsearchNoNewDocuments
+#      expr: 'increase(elasticsearch_indices_docs{es_data_node="true"}[10m]) < 1'
+#      for: 0m
+#      labels:
+#        severity: warning
+#      annotations:
+#        summary: Elasticsearch no new documents (instance {{ $labels.instance }})
+#        description: "No new documents for 10 min!\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
