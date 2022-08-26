@@ -67,14 +67,14 @@ groups:
         summary: Rabbitmq too many connections (instance {{ $labels.instance }})
         description: "The total connections of a node is too high\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 
-    - alert: RabbitmqNoQueueConsumer
-      expr: 'rabbitmq_queue_consumers < 1'
-      for: 1m
-      labels:
-        severity: warning
-      annotations:
-        summary: Rabbitmq no queue consumer (instance {{ $labels.instance }})
-        description: "A queue has less than 1 consumer\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+#    - alert: RabbitmqNoQueueConsumer
+#      expr: 'rabbitmq_queue_consumers < 1'
+#      for: 1m
+#      labels:
+#        severity: warning
+#      annotations:
+#        summary: Rabbitmq no queue consumer (instance {{ $labels.instance }})
+#        description: "A queue has less than 1 consumer\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 
     - alert: RabbitmqUnroutableMessages
       expr: 'increase(rabbitmq_channel_messages_unroutable_returned_total[1m]) > 0 or increase(rabbitmq_channel_messages_unroutable_dropped_total[1m]) > 0'
