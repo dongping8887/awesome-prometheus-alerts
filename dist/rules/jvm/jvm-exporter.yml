@@ -12,3 +12,21 @@ groups:
       annotations:
         summary: JVM memory filling up (instance {{ $labels.instance }})
         description: "JVM memory is filling up (> 80%)\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+
+    - alert: RedisUnusualGetHitRate
+      expr: 'sum by (application, instance) (rate(cache_gets_total[1m])) > 0.1'
+      for: 2m
+      labels:
+        severity: warning
+      annotations:
+        summary: redis unusual get hit rate (instance {{ $labels.instance }})
+        description: "Too many requests for data from Redis. (> 0.1)\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+
+    - alert: RedisUnusualPutRate
+      expr: 'sum by (application, instance) (rate(cache_puts_total[1m])) > 0.1'
+      for: 2m
+      labels:
+        severity: warning
+      annotations:
+        summary: redis unusual put rate (instance {{ $labels.instance }})
+        description: "Too many requests to save data to Redis. (> 0.1)\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
