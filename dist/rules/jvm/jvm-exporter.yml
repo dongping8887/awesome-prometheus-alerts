@@ -5,7 +5,7 @@ groups:
   rules:
 
     - alert: JvmMemoryFillingUp
-      expr: '(sum by (instance)(jvm_memory_used_bytes{area="heap"}) / sum by (instance)(jvm_memory_max_bytes{area="heap"})) * 100 > 80'
+      expr: '(sum by (city, instance, job)(jvm_memory_used_bytes{area="heap"}) / sum by (city, instance, job)(jvm_memory_max_bytes{area="heap"})) * 100 > 80'
       for: 2m
       labels:
         severity: warning
@@ -14,7 +14,8 @@ groups:
         description: "JVM memory is filling up (> 80%)\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 
     - alert: RedisUnusualGetHitRate
-      expr: 'sum by (application, instance) (rate(cache_gets_total[1m])) > 0.1'
+      expr: 'sum by (city, instance, job) (rate(cache_gets_total[1m])) > 0.1'
+      #for: 30s
       for: 2m
       labels:
         severity: warning
@@ -23,7 +24,7 @@ groups:
         description: "Too many requests for data from Redis. (> 0.1)\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 
     - alert: RedisUnusualPutRate
-      expr: 'sum by (application, instance) (rate(cache_puts_total[1m])) > 0.1'
+      expr: 'sum by (city, instance, job) (rate(cache_puts_total[1m])) > 0.1'
       for: 2m
       labels:
         severity: warning
