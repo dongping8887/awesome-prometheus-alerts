@@ -26,20 +26,20 @@ groups:
         annotations:
           summary: Jvm服务停止 (instance {{ $labels.instance }})
           description: "Jvm服务停止 (> 0)\n  VALUE = {{ $value }}\n"
-      - alert: Redis的Get请求率高
+      - alert: Jvm中Redis的Get请求率高
         expr: 'sum by (city, instance, job) (rate(cache_gets_total[1m])) > 10000'
         #for: 30s
         for: 1m
         labels:
           severity: 严重告警
         annotations:
-          summary: Redis的Get请求率高 (instance {{ $labels.instance }})
-          description: "Redis的Get请求率高. (> 10000)\n  VALUE = {{ $value }}\n"
-      - alert: Redis的Put请求率高
+          summary: Jvm中Redis的Get请求率高 (instance {{ $labels.instance }})
+          description: "Jvm中Redis的Get请求率高. (> 10000)\n  VALUE = {{ $value }}\n"
+      - alert: Jvm中Redis的Put请求率高
         expr: 'sum by (city, instance, job) (rate(cache_puts_total[1m])) > 50000'
         for: 1m
         labels:
           severity: 严重告警
         annotations:
-          summary: Redis的Put请求率高 (instance {{ $labels.instance }})
-          description: "Redis的Put请求率高. (> 50000)\n  VALUE = {{ $value }}\n"
+          summary: Jvm中Redis的Put请求率高 (instance {{ $labels.instance }})
+          description: "Jvm中Redis的Put请求率高. (> 50000)\n  VALUE = {{ $value }}\n"

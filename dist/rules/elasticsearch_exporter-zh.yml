@@ -11,11 +11,11 @@ groups:
 #          summary: "ES集群节点减少:{{$.Labels.job}}"
 #          description: "ES集群节点数减少:{{$.Labels.job}},(当前:{{$value}})"
 
-      - alert: jvm内存使用率告警
+      - alert: ElasticSearch中Jvm内存使用率告警
         expr: elasticsearch_jvm_memory_used_bytes{area="heap"} / elasticsearch_jvm_memory_max_bytes{area="heap"}*100 > 90
         for: 5m
         labels:
           severity: 严重告警
         annotations:
-          summary: "jvm内存使用率过高:{{$.Labels.job}}"
-          description: "jvm内存使用率过高:{{$.Labels.job}}大于90%,(当前:{{$value}})"
+          summary: "ElasticSearch中Jvm内存使用率过高:{{$.Labels.job}}"
+          description: "ElasticSearch中Jvm内存使用率过高:{{$.Labels.job}}大于90%,(当前:{{$value}})"
