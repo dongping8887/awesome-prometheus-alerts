@@ -2,14 +2,30 @@
 groups:
   - name: Jvm服务监控
     rules:
-      - alert: Jvm内存使用率高
-        expr: '(sum by (city, instance, job)(jvm_memory_used_bytes{area="heap"}) / sum by (city, instance, job)(jvm_memory_max_bytes{area="heap"})) * 100 > 80'
-        for: 5m
+#      - alert: Jvm内存使用率高
+#        expr: '(sum by (city, instance, job)(jvm_memory_used_bytes{area="heap"}) / sum by (city, instance, job)(jvm_memory_max_bytes{area="heap"})) * 100 > 80'
+#        for: 5m
+#        labels:
+#          severity: 告警
+#        annotations:
+#          summary: Jvm内存使用率高 (instance {{ $labels.instance }})
+#          description: "Jvm内存使用率高 (> 80%)\n  VALUE = {{ $value }}\n"
+      - alert: JvmFullGC频率高
+        expr: 'irate(jvm_gc_pause_seconds_count{action="end of major GC"}[1m]) > 0'
+        for: 1m
         labels:
           severity: 告警
         annotations:
-          summary: Jvm内存使用率高 (instance {{ $labels.instance }})
-          description: "Jvm内存使用率高 (> 80%)\n  VALUE = {{ $value }}\n"
+          summary: Jvm Full GC频率高 (instance {{ $labels.instance }})
+          description: "Jvm Full GC频率高 (> 0)\n  VALUE = {{ $value }}\n"
+      - alert: Jvm服务停止
+        expr: 'irate(process_uptime_seconds[1m]) == 0'
+        for: 5m
+        labels:
+          severity: 严重告警
+        annotations:
+          summary: Jvm服务停止 (instance {{ $labels.instance }})
+          description: "Jvm服务停止 (> 0)\n  VALUE = {{ $value }}\n"
       - alert: Redis的Get请求率高
         expr: 'sum by (city, instance, job) (rate(cache_gets_total[1m])) > 10000'
         #for: 30s
