@@ -21,7 +21,7 @@ groups:
           description: "{{$labels.instance}} 服务器延时超过3分钟，当前状态{{ $value }}. "
 
       - alert: CPU高负荷
-        expr: 100 - (avg by (city, instance, job) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 90
+        expr: 100 - (avg by (city, instance, job) (rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 90
         for: 5m
         labels:
           severity: 严重告警
@@ -30,7 +30,7 @@ groups:
           description: "{{$labels.instance}} CPU使用大于90%，当前使用率{{ $value }}%. "
 
       - alert: 磁盘IO性能
-        expr: avg by(city, instance, job) (irate(node_disk_io_time_seconds_total[1m])) * 100 > 90
+        expr: avg by(city, instance, job) (rate(node_disk_io_time_seconds_total[1m])) * 100 > 90
         for: 5m
         labels:
           severity: 严重告警
