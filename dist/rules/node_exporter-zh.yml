@@ -46,7 +46,7 @@ groups:
           severity: 严重告警
         annotations:
           summary: "{{$labels.instance}} 流入网络带宽过高，请尽快处理！"
-          description: "{{$labels.instance}} 流入网络带宽持续5分钟高于100M. RX带宽使用量{{$value}}."
+          description: "{{$labels.instance}} 流入网络带宽持续5分钟高于100M. RX带宽使用量{{ $value }}."
 
       - alert: 网络流出
         expr: ((sum(rate (node_network_transmit_bytes_total{device!~'tap.*|veth.*|br.*|docker.*|virbr*|lo*'}[5m])) by (instance,job)) / 100) > 102400
@@ -55,7 +55,7 @@ groups:
           severity: 严重告警
         annotations:
           summary: "{{$labels.instance}} 流出网络带宽过高,请尽快处理！"
-          description: "{{$labels.instance}} 流出网络带宽持续5分钟高于100M. RX带宽使用量{$value}}."
+          description: "{{$labels.instance}} 流出网络带宽持续5分钟高于100M. RX带宽使用量{{ $value }}."
 
       - alert: TCP连接数
         expr: node_netstat_Tcp_CurrEstab > 10000
