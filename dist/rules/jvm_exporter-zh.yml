@@ -9,7 +9,7 @@ groups:
           severity: 告警
         annotations:
           summary: Jvm内存使用率高 (instance {{ $labels.instance }})
-          description: "Jvm内存使用率高 (> 80%)\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+          description: "Jvm内存使用率高 (> 80%)\n  VALUE = {{ $value }}\n"
       - alert: Redis的Get请求率高
         expr: 'sum by (city, instance, job) (rate(cache_gets_total[1m])) > 10000'
         #for: 30s
@@ -18,7 +18,7 @@ groups:
           severity: 严重告警
         annotations:
           summary: Redis的Get请求率高 (instance {{ $labels.instance }})
-          description: "Redis的Get请求率高. (> 10000)\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+          description: "Redis的Get请求率高. (> 10000)\n  VALUE = {{ $value }}\n"
       - alert: Redis的Put请求率高
         expr: 'sum by (city, instance, job) (rate(cache_puts_total[1m])) > 50000'
         for: 1m
@@ -26,4 +26,4 @@ groups:
           severity: 严重告警
         annotations:
           summary: Redis的Put请求率高 (instance {{ $labels.instance }})
-          description: "Redis的Put请求率高. (> 50000)\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+          description: "Redis的Put请求率高. (> 50000)\n  VALUE = {{ $value }}\n"
