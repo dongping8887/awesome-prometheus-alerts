@@ -2,11 +2,11 @@
 groups:
   - name: Postgresql服务监控
     rules:
-      - alert: Postgresql下线
+      - alert: Postgresql服务停止
         expr: 'pg_up == 0'
         for: 0m
         labels:
           severity: 严重告警
         annotations:
-          summary: Postgresql下线 (instance {{ $labels.instance }})
-          description: "Postgresql下线\n  VALUE = {{ $value }}\n"
+          summary: Postgresql服务停止 (instance {{ $labels.instance }})
+          description: "Postgresql服务停止\n  VALUE = {{ $value }}\n"
