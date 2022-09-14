@@ -1,0 +1,22 @@
+# RabbitMQ服务监控
+groups:
+  - name: RabbitMQ服务监控
+    rules:
+      - alert: RabbitMQ服务停止
+        expr: rabbitmq_up ==0
+        for: 3m
+        labels:
+          severity: 严重告警
+        annotations:
+          description: "{{$labels.instance}}RabbitMQ服务已停止，当前状态{{ $value }}"
+          summary: "RabbitMQ服务已停止3分钟，请尽快处理！"
+
+      - alert: RabbitMQ内存使用大于2G
+        expr: rabbitmq_node_mem_used/1024/1024 > 2048
+        for: 3m
+        labels:
+          severity: 严重告警
+        annotations:
+          description: "{{ $labels.instance }} RabbitMQ内存使占用过高 !"
+          value: '{{ $value }} MB'
+          summary: "RabbitMQ内存使占用大于2G"

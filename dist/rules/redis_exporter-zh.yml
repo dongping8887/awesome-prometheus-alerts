@@ -1,0 +1,21 @@
+# Redis服务监控
+groups:
+  - name: Redis服务监控
+    rules:
+      - alert: Redis服务停止
+        expr: redis_up == 0
+        for: 1m
+        labels:
+          severity: 严重告警
+        annotations:
+          summary: " {{ $labels.alias }} Redis服务已停止，当前状态{{ $value }}"
+          description: "{{$labels.instance}}:Redis 服务停止运行 "
+
+      - alert: Redis连接数超过最大
+        expr: redis_connected_clients / redis_config_maxclients * 100 > 80
+        for: 1m
+        labels:
+          severity: 严重告警
+        annotations:
+          summary: " {{ $labels.alias }}"
+          description: " {{$labels.instance}}:Redis连接数超过最大连接数的80%.当前连接数{{ $value }}"

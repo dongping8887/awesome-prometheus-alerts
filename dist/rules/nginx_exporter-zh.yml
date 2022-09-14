@@ -1,0 +1,29 @@
+groups:
+- name: Nginx服务监控
+  rules:
+    - alert: Nginx高Http4xx错误率
+      expr: 'sum(rate(nginx_http_requests_total{status=~"^4.."}[1m])) / sum(rate(nginx_http_requests_total[1m])) * 100 > 5'
+      for: 1m
+      labels:
+        severity: 严重告警
+      annotations:
+        summary: Nginx高Http4xx错误率 (instance {{ $labels.instance }})
+        description: "Nginx高Http4xx错误率(> 5%)\n  VALUE = {{ $value }}\n"
+
+    - alert: Nginx高Http5xx错误率
+      expr: 'sum(rate(nginx_http_requests_total{status=~"^5.."}[1m])) / sum(rate(nginx_http_requests_total[1m])) * 100 > 5'
+      for: 1m
+      labels:
+        severity: 严重告警
+      annotations:
+        summary: Nginx高Http5xx错误率 (instance {{ $labels.instance }})
+        description: "Nginx高Http5xx错误率 (> 5%)\n  VALUE = {{ $value }}\n"
+
+    - alert: Nginx延迟高
+      expr: 'histogram_quantile(0.99, sum(rate(nginx_http_request_duration_seconds_bucket[2m])) by (host, node)) > 3'
+      for: 2m
+      labels:
+        severity: 告警
+      annotations:
+        summary: Nginx延迟高 (instance {{ $labels.instance }})
+        description: "Nginx延迟高\n  VALUE = {{ $value }}\n"
