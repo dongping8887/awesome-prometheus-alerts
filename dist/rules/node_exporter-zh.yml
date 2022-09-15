@@ -30,22 +30,22 @@ groups:
           description: "{{$labels.instance}} CPU使用大于90%，当前使用率{{ $value }}%. "
 
       - alert: 系统高负荷
-        expr: avg(node_load5) by (city, instance)/ count(count(node_cpu_seconds_total) by (city, instance,cpu)) by (city, instance) > 0.8
+        expr: avg(node_load5) by (city, instance)/ count(count(node_cpu_seconds_total) by (city, instance,cpu)) by (city, instance) > 1
         for: 5m
         labels:
           severity: 告警
         annotations:
           summary: "{{$labels.instance}} 系统负载过高，请尽快处理！"
-          description: "{{$labels.instance}} 系统负载单核平均值大于0.8，当前使用率{{ $value }}%. "
+          description: "{{$labels.instance}} 系统负载单核平均值大于1，当前使用率{{ $value }}%. "
 
       - alert: 系统高负荷
-        expr: avg(node_load5) by (city, instance)/ count(count(node_cpu_seconds_total) by (city, instance,cpu)) by (city, instance) > 1
+        expr: avg(node_load5) by (city, instance)/ count(count(node_cpu_seconds_total) by (city, instance,cpu)) by (city, instance) > 2
         for: 5m
         labels:
           severity: 严重告警
         annotations:
           summary: "{{$labels.instance}} 系统负载过高，请尽快处理！"
-          description: "{{$labels.instance}} 系统负载单核平均值大于1，当前使用率{{ $value }}%. "
+          description: "{{$labels.instance}} 系统负载单核平均值大于2，当前使用率{{ $value }}%. "
 
       - alert: 磁盘IO性能
         expr: avg by(city, instance, job) (rate(node_disk_io_time_seconds_total[1m])) * 100 > 90
