@@ -56,4 +56,4 @@ groups:
           severity: 告警
         annotations:
           summary: RabbitMQ队列中没有消费者 (instance {{ $labels.instance }})
-          description: "RabbitMQ队列中没有消费者\n  VALUE = {{ $value }}\n"
+          description: "RabbitMQ队列中没有消费者\n  queue = {{ $labels.queue }}\n"
