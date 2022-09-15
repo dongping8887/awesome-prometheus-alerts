@@ -4,7 +4,7 @@ groups:
     rules:
       - alert: RabbitMQ服务停止
         expr: rabbitmq_up ==0
-        for: 3m
+        for: 0m
         labels:
           severity: 严重告警
         annotations:
@@ -20,3 +20,40 @@ groups:
           description: "{{ $labels.instance }} RabbitMQ内存使占用过高 !"
           value: '{{ $value }} MB'
           summary: "RabbitMQ内存使占用大于2G"
+
+      - alert: RabbitMQ内存溢出
+        expr: rabbitmq_node_mem_used / rabbitmq_node_mem_limit * 100 > 90
+        for: 2m
+        labels:
+          severity: 严重告警
+        annotations:
+          description: "{{ $labels.instance }} RabbitMQ内存溢出 !"
+          value: '{{ $value }} MB'
+          summary: "RabbitMQ内存溢出 (> 90%)"
+
+      - alert: RabbitMQ连接数太多
+        expr: 'rabbitmq_connectionsTotal > 1000'
+        for: 2m
+        labels:
+          severity: 严重告警
+        annotations:
+          summary: RabbitMQ连接数太多 (instance {{ $labels.instance }})
+          description: "RabbitMQ连接数太多 (> 1000)\n  VALUE = {{ $value }}\n"
+
+      - alert: RabbitMQ队列中消息太多
+        expr: 'rabbitmq_queue_messages_ready{queue!~"my-queue"} > 5000'
+        for: 2m
+        labels:
+          severity: 告警
+        annotations:
+          summary: RabbitMQ队列中消息太多 (instance {{ $labels.instance }})
+          description: "RabbitMQ队列中消息太多 (> 1000 msgs)\n  VALUE = {{ $value }}\n"
+
+      - alert: RabbitMQ队列中没有消费者
+        expr: 'rabbitmq_queue_consumers == 0'
+        for: 1m
+        labels:
+          severity: 告警
+        annotations:
+          summary: RabbitMQ队列中没有消费者 (instance {{ $labels.instance }})
+          description: "RabbitMQ队列中没有消费者\n  VALUE = {{ $value }}\n"
