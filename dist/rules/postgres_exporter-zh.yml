@@ -10,3 +10,21 @@ groups:
         annotations:
           summary: Postgresql服务停止 (instance {{ $labels.instance }})
           description: "Postgresql服务停止\n  VALUE = {{ $value }}\n"
+
+      - alert: Postgresql连接数太多
+        expr: 'sum by(city) (pg_stat_activity_count{datname!~"template.*|postgres"}) >= avg by(city)(pg_settings_max_connections) * 0.8'
+        for: 2m
+        labels:
+          severity: 严重告警
+        annotations:
+          summary: Postgresql连接数太多 (instance {{ $labels.instance }})
+          description: "Postgresql连接数太多 (>= 80%).\n  VALUE = {{ $value }}\n"
+
+      - alert: Postgresql死锁
+        expr: 'increase(pg_stat_database_deadlocks{datname!~"template.*|postgres"}[1m]) >= 1'
+        for: 0m
+        labels:
+          severity: 告警
+        annotations:
+          summary: Postgresql死锁 (instance {{ $labels.instance }})
+          description: "Postgresql有死锁(>= 1).\n  VALUE = {{ $value }}\n"
