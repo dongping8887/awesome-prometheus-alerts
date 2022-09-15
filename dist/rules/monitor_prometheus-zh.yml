@@ -35,8 +35,8 @@ groups:
         labels:
           severity: 严重告警
         annotations:
-          summary: " 服务内存告警，当前大小 {{ $value }}"
-          description: " 服务内存告警（>200MB）"
+          summary: " 监控服务内存告警，当前大小 {{ $value }}"
+          description: " 监控服务内存告警（>200MB）"
 
       - alert: prometheus监控服务内存告警
         expr: process_resident_memory_bytes{job="prometheus"} / 1024 / 1024 > 3096
