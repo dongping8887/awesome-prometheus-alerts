@@ -1,0 +1,48 @@
+# 监控中心服务监控
+groups:
+  - name: 监控中心服务监控
+    rules:
+      - alert: Prometheus服务停止
+        expr: up{job="prometheus"} == 0
+        for: 1m
+        labels:
+          severity: 严重告警
+        annotations:
+          summary: " {{ $labels.city }} Prometheus服务停止，当前状态{{ $value }}"
+          description: "{{ $labels.city }} Prometheus服务停止"
+
+      - alert: PushGateway服务停止
+        expr: up{job="pushgateway"} == 0
+        for: 1m
+        labels:
+          severity: 严重告警
+        annotations:
+          summary: " {{ $labels.city }} PushGateway服务停止，当前状态{{ $value }}"
+          description: "{{ $labels.city }} PushGateway服务停止"
+
+      - alert: AlertManager服务停止
+        expr: up{job="alertmanager"} == 0
+        for: 1m
+        labels:
+          severity: 严重告警
+        annotations:
+          summary: " {{ $labels.city }} AlertManager服务停止，当前状态{{ $value }}"
+          description: "{{ $labels.city }} AlertManager服务停止"
+
+      - alert: 监控服务内存告警
+        expr: process_resident_memory_bytes{job!="prometheus"} / 1024 / 1024 > 200
+        for: 2m
+        labels:
+          severity: 严重告警
+        annotations:
+          summary: " 服务内存告警，当前大小 {{ $value }}"
+          description: " 服务内存告警（>200MB）"
+
+      - alert: prometheus监控服务内存告警
+        expr: process_resident_memory_bytes{job="prometheus"} / 1024 / 1024 > 3096
+        for: 2m
+        labels:
+          severity: 严重告警
+        annotations:
+          summary: " 服务内存告警，当前大小 {{ $value }}"
+          description: " 服务内存告警（>3096MB）"
