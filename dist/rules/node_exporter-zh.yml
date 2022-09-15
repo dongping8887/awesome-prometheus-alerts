@@ -29,6 +29,24 @@ groups:
           summary: "{{$labels.instance}} CPU使用率过高，请尽快处理！"
           description: "{{$labels.instance}} CPU使用大于90%，当前使用率{{ $value }}%. "
 
+      - alert: 系统高负荷
+        expr: avg(node_load5) by (city, instance)/ count(count(node_cpu_seconds_total) by (city, instance,cpu)) by (city, instance) > 0.8
+        for: 5m
+        labels:
+          severity: 告警
+        annotations:
+          summary: "{{$labels.instance}} 系统负载过高，请尽快处理！"
+          description: "{{$labels.instance}} 系统负载单核平均值大于0.8，当前使用率{{ $value }}%. "
+
+      - alert: 系统高负荷
+        expr: avg(node_load5) by (city, instance)/ count(count(node_cpu_seconds_total) by (city, instance,cpu)) by (city, instance) > 1
+        for: 5m
+        labels:
+          severity: 严重告警
+        annotations:
+          summary: "{{$labels.instance}} 系统负载过高，请尽快处理！"
+          description: "{{$labels.instance}} 系统负载单核平均值大于1，当前使用率{{ $value }}%. "
+
       - alert: 磁盘IO性能
         expr: avg by(city, instance, job) (rate(node_disk_io_time_seconds_total[1m])) * 100 > 90
         for: 5m
@@ -65,6 +83,15 @@ groups:
         annotations:
           summary: " TCP_ESTABLISHED过高！"
           description: "{{$labels.instance}} TCP_ESTABLISHED大于100%,当前使用率{{ $value }}%."
+
+      - alert: 磁盘容量
+        expr: 100-(node_filesystem_free_bytes{fstype=~"ext4|xfs"}/node_filesystem_size_bytes {fstype=~"ext4|xfs"}*100) > 80
+        for: 1m
+        labels:
+          severity: 告警
+        annotations:
+          summary: "{{$labels.mountpoint}} 磁盘分区使用率过高，请尽快处理！"
+          description: "{{$labels.instance}} 磁盘分区使用大于80%，当前使用率{{ $value }}%."
 
       - alert: 磁盘容量
         expr: 100-(node_filesystem_free_bytes{fstype=~"ext4|xfs"}/node_filesystem_size_bytes {fstype=~"ext4|xfs"}*100) > 90
