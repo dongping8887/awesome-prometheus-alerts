@@ -8,8 +8,8 @@ groups:
         labels:
           severity: 严重告警
         annotations:
-          summary: " {{ $labels.alias }} Redis服务已停止，当前状态{{ $value }}"
-          description: "{{$labels.instance}}:Redis 服务停止运行 "
+          summary: "Redis服务停止，当前状态：{{ $value }}"
+          description: "Redis服务停止运行"
 
       - alert: Redis内存使用率太高
         expr: redis_memory_used_bytes / redis_memory_max_bytes * 100 > 90
@@ -18,16 +18,16 @@ groups:
           severity: 严重告警
         annotations:
           summary: "Redis内存使用率太高"
-          description: "Redis内存使用率太高（>90%）, 当前值:{{$value}}"
+          description: "Redis内存使用率太高（>90%），当前值：{{$value}}"
 
-      - alert: Redis连接数超过最大
+      - alert: Redis连接数过多
         expr: redis_connected_clients > 500
         for: 1m
         labels:
           severity: 严重告警
         annotations:
-          summary: " {{ $labels.alias }}"
-          description: " {{$labels.instance}}:Redis连接数超过500.当前连接数:{{ $value }}"
+          summary: "Redis连接数过多"
+          description: "Redis连接数过多（>500），当前连接数：{{ $value }}"
 
       - alert: Redis的key中项增长率太高
         expr: irate(redis_key_size[5m]) > 1000
@@ -36,7 +36,7 @@ groups:
           severity: 严重告警
         annotations:
           summary: "Redis的key中项增长率太高"
-          description: " Redis的key中项增长率太高（>1000）.当前速率:{{ $value }}"
+          description: "Redis的key中项增长率太高（>1000），当前速率：{{ $value }}"
 
       - alert: Redis的key中项太多
         expr: redis_key_size{key!~".*roadSpeedWithBusId"} > 10000000
@@ -45,4 +45,4 @@ groups:
           severity: 告警
         annotations:
           summary: "Redis的key中项太多"
-          description: " Redis的key中项太多（>100000）.当前值:{{ $value }}"
+          description: "Redis的key中项太多（>100000），当前值：{{ $value }}"
