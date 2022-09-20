@@ -21,8 +21,8 @@ groups:
           description: "Postgresql连接数太多 (>= 80%).\n  VALUE = {{ $value }}\n"
 
       - alert: Postgresql死锁
-        expr: 'increase(pg_stat_database_deadlocks{datname!~"template.*|postgres"}[1m]) >= 1'
-        for: 0m
+        expr: 'increase(pg_stat_database_deadlocks{datname!~"template.*|postgres"}[1m]) >= 5'
+        for: 1m
         labels:
           severity: 告警
         annotations:

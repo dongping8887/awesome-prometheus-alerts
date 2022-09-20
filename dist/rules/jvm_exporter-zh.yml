@@ -11,7 +11,7 @@ groups:
 #          summary: Jvm内存使用率高 (instance {{ $labels.instance }})
 #          description: "Jvm内存使用率高 (> 80%)\n  VALUE = {{ $value }}\n"
       - alert: JvmFullGC频率高
-        expr: 'irate(jvm_gc_pause_seconds_count{action="end of major GC"}[1m]) > 0.05'
+        expr: 'irate(jvm_gc_pause_seconds_count{action="end of major GC"}[1m]) > 0.2'
         for: 1m
         labels:
           severity: 告警
