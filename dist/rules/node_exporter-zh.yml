@@ -12,7 +12,7 @@ groups:
           description: "{{ $labels.instance }}内存使用率超过90%,当前使用率{{ $value }}%."
 
       - alert: 服务器宕机
-        expr: up == 0
+        expr: rate(node_time_seconds [3m]) == 0
         for: 3m
         labels:
           severity: 严重告警
