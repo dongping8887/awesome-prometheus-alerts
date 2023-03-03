@@ -30,13 +30,13 @@ groups:
           description: "{{ $labels.city }} AlertManager服务停止"
 
       - alert: 监控服务内存告警
-        expr: process_resident_memory_bytes{job!="prometheus"} / 1024 / 1024 > 200
+        expr: process_resident_memory_bytes{job!="prometheus"} / 1024 / 1024 > 500
         for: 2m
         labels:
           severity: 严重告警
         annotations:
           summary: " 监控服务内存告警，当前大小 {{ $value }}"
-          description: " 监控服务内存告警（>200MB）"
+          description: " 监控服务内存告警（>500MB）"
 
       - alert: prometheus监控服务内存告警
         expr: process_resident_memory_bytes{job="prometheus"} / 1024 / 1024 > 6144
