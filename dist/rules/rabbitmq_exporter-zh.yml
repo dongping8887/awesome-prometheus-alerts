@@ -41,7 +41,7 @@ groups:
           description: "RabbitMQ连接数太多 (> 1000)\n  VALUE = {{ $value }}\n"
 
       - alert: RabbitMQ队列中消息太多
-        expr: 'rabbitmq_queue_messages_ready{queue!~"my-queue"} > 5000'
+        expr: 'rabbitmq_queue_messages_ready{queue!~"my-queue|.*queue.middleware2App.*"} > 5000'
         for: 2m
         labels:
           severity: 告警
