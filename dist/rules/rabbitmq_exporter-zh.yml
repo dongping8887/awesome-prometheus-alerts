@@ -50,7 +50,7 @@ groups:
           description: "RabbitMQ队列中消息太多\n  queue = {{ $labels.queue }} VALUE = {{ $value }}\n"
 
       - alert: RabbitMQ队列中没有消费者
-        expr: 'rabbitmq_queue_consumers{queue!~".*topic.departScreen.*|.*queue.middleware2App.*|AUTO.*|stomp-subscription.*"} == 0'
+        expr: 'rabbitmq_queue_consumers{city!~"预发布环境", queue!~".*topic.departScreen.*|.*queue.middleware2App.*|AUTO.*|stomp-subscription.*"} == 0'
         for: 1m
         labels:
           severity: 告警
