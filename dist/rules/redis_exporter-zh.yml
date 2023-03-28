@@ -39,10 +39,10 @@ groups:
           description: "Redis的key中项增长率太高（>1000），当前速率：{{ $value }}"
 
       - alert: Redis的key中项太多
-        expr: redis_key_size{key!~".*roadSpeedWithBusId"} > 10000000
+        expr: redis_key_size{key!~".*trans.data.base.line.point"} > 1000000
         for: 1m
         labels:
           severity: 告警
         annotations:
           summary: "Redis的key中项太多"
-          description: "Redis的key中项太多（>100000），当前值：{{ $value }}"
+          description: "Redis的key中项太多（>1000000），db: {{ $labels.db }}，key: {{ $labels.key }}，当前值：{{ $value }}"
