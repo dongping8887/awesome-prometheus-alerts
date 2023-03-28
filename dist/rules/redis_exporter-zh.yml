@@ -39,7 +39,8 @@ groups:
           description: "Redis的key中项增长率太高（>1000），当前速率：{{ $value }}"
 
       - alert: Redis的key中项太多
-        expr: redis_key_size{key!~".*trans.data.base.line.point"} > 1000000
+        # 排除榆林现场字符串项，每个字符串都1M多
+        expr: redis_key_size{key!~".*trans.data.base.line.point|35c107354a6bfe20b7ff368a975b2f027a7758ab"} > 1000000
         for: 1m
         labels:
           severity: 告警
