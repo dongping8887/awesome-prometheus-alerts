@@ -85,7 +85,7 @@ groups:
           description: "{{$labels.instance}} TCP_ESTABLISHED大于100%,当前使用率{{ $value }}%."
 
       - alert: 磁盘容量
-        expr: 100-(node_filesystem_free_bytes{fstype=~"ext4|xfs"}/node_filesystem_size_bytes {fstype=~"ext4|xfs"}*100) > 80
+        expr: 100 - ((node_filesystem_avail_bytes{device!~'rootfs'} * 100) / node_filesystem_size_bytes{device!~'rootfs'}) > 80
         for: 1m
         labels:
           severity: 告警
@@ -94,7 +94,7 @@ groups:
           description: "{{$labels.instance}} 磁盘分区使用大于80%，当前使用率{{ $value }}%."
 
       - alert: 磁盘容量
-        expr: 100-(node_filesystem_free_bytes{fstype=~"ext4|xfs"}/node_filesystem_size_bytes {fstype=~"ext4|xfs"}*100) > 90
+        expr: 100 - ((node_filesystem_avail_bytes{device!~'rootfs'} * 100) / node_filesystem_size_bytes{device!~'rootfs'}) > 90
         for: 1m
         labels:
           severity: 严重告警
