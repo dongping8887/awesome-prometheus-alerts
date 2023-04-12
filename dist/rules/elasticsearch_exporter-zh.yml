@@ -2,15 +2,6 @@
 groups:
   - name: ElasticSearch服务监控
     rules:
-#      - alert: ES集群节点减少
-#        expr: elasticsearch_cluster_health_number_of_nodes < 3  #ES集群节点数3
-#        for: 5m
-#        labels:
-#          severity: 严重告警
-#        annotations:
-#          summary: "ES集群节点减少:{{$.Labels.job}}"
-#          description: "ES集群节点数减少:{{$.Labels.job}},(当前:{{$value}})"
-
       - alert: ElasticSearch中Jvm内存使用率告警
         expr: elasticsearch_jvm_memory_used_bytes{area="heap"} / elasticsearch_jvm_memory_max_bytes{area="heap"}*100 > 90
         for: 5m
@@ -19,3 +10,23 @@ groups:
         annotations:
           summary: "ElasticSearch中Jvm内存使用率过高:{{$.Labels.job}}"
           description: "ElasticSearch中Jvm内存使用率过高:{{$.Labels.job}}大于90%,(当前:{{$value}})"
+
+      - alert: ElasticSearch中索引数告警
+        expr: elasticsearch_cluster_health_active_shards{city!~"三亚现场|延安现场"} > 800
+        for: 1m
+        labels:
+          severity: 告警
+        annotations:
+          summary: "ElasticSearch中索引数太多"
+          description: "ElasticSearch中索引数大于800,(当前:{{$value}})"
+
+      - alert: ElasticSearch中索引数严重告警
+        expr: elasticsearch_cluster_health_active_shards{city!~"三亚现场|延安现场"} > 900
+        for: 1m
+        labels:
+          severity: 严重告警
+        annotations:
+          summary: "ElasticSearch中索引数太多"
+          description: "ElasticSearch中索引数大于900,(当前:{{$value}})"
+
+
