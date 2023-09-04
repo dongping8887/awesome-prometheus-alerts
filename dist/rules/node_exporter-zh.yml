@@ -91,7 +91,7 @@ groups:
           severity: 严重告警
         annotations:
           summary: " TCP_ESTABLISHED过高！"
-          description: "{{$labels.instance}} TCP_ESTABLISHED大于100%,当前使用率{{ $value }}%."
+          description: "{{$labels.instance}} TCP_ESTABLISHED大于10000,当前连接数{{ $value }}."
 
       - alert: 磁盘容量
         expr: 100 - ((node_filesystem_avail_bytes{device!~'rootfs'} * 100) / node_filesystem_size_bytes{device!~'rootfs'}) > 80
