@@ -30,13 +30,13 @@ groups:
           description: "{{$labels.instance}} CPU使用大于90%，当前使用率{{ $value }}%. "
 
       - alert: 系统高负荷
-        expr: avg(node_load5) by (city, instance, job)/ count(count(node_cpu_seconds_total) by (city, instance, job, cpu)) by (city, instance, job) > 1
+        expr: avg(node_load5) by (city, instance, job)/ count(count(node_cpu_seconds_total) by (city, instance, job, cpu)) by (city, instance, job) > 1.5
         for: 5m
         labels:
           severity: 告警
         annotations:
           summary: "{{$labels.instance}} 系统负载过高，请尽快处理！"
-          description: "{{$labels.instance}} 系统负载单核平均值大于1，当前使用率{{ $value }}%. "
+          description: "{{$labels.instance}} 系统负载单核平均值大于1.5，当前使用率{{ $value }}%. "
 
       - alert: 系统高负荷
         expr: avg(node_load5) by (city, instance, job)/ count(count(node_cpu_seconds_total) by (city, instance, job, cpu)) by (city, instance, job) > 2
