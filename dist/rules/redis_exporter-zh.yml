@@ -40,7 +40,7 @@ groups:
 
       - alert: Redis的key中项太多
         # 排除榆林现场字符串项，每个字符串都1M多
-        expr: redis_key_size{key!~".*trans.data.base.line.point|35c107354a6bfe20b7ff368a975b2f027a7758ab"} > 1000000
+        expr: redis_key_size{key!~".*trans.data.base.*|35c107354a6bfe20b7ff368a975b2f027a7758ab"} > 500000
         for: 1m
         labels:
           severity: 告警
