@@ -3,7 +3,7 @@ groups:
   - name: ElasticSearch服务监控
     rules:
       - alert: ElasticSearch中Jvm内存使用率告警
-        expr: elasticsearch_jvm_memory_used_bytes{area="heap"} / elasticsearch_jvm_memory_max_bytes{area="heap"}*100 > 90
+        expr: elasticsearch_jvm_memory_used_bytes{area="heap", city!~"三亚现场"} / elasticsearch_jvm_memory_max_bytes{area="heap"}*100 > 90
         for: 5m
         labels:
           severity: 严重告警
